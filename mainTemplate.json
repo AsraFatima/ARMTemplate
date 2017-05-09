@@ -1,4 +1,4 @@
-    {
+  {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
 
@@ -7,7 +7,7 @@
       // Storage
       "vhdStorageAccount": {
         "type": "string",
-        "defaultValue": "",
+        "defaultValue": "[toLower(substring(concat('xenapp',uniqueString(subscription().subscriptionId,resourceGroup().id)), 0, 13))]",
         "metadata": {
           "description": "Specifies the name of the storage account used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
         }
@@ -26,8 +26,8 @@
         }
       },
       "vhdStorageGroup": {
-        "type": "string",
-        "defaultValue": "[resourceGroup().name]",
+	  "type": "string",
+        "defaultValue": "",
         "metadata": {
           "description": "Specifies the resource group which should contain the storage account."
         }
@@ -60,63 +60,38 @@
     },
     "variables": {
       "artifactsLocation": "[concat(parameters('artifactsBaseUrl'),'/')]",      
-      "creatingStorageAccountUrl": "[concat(variables('artifactsLocation'), 'storageAccount-new', '.json')]",     
+      "creatingStorageAccountUrl": "[concat(variables('artifactsLocation'), 'storageAccount-new', '.json')]" 
+	  
     },
 
     "resources": [
-        {
-          "apiVersion": "2015-01-01",
-          "type": "Microsoft.Resources/deployments",
-          "name": "loop-0",
-          "properties": {
-            "mode": "Incremental",
-            "parameters": {
-            
-            },
-            "template": {
-              "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-              "contentVersion": "1.0.0.0",
-              "parameters": {},
-              "variables": {},
-              "resources": [
-                    {
-						"name": "CreatingStorageAccount",
-						"type": "Microsoft.Resources/deployments",
-						"apiVersion": "2015-01-01",
-						"dependsOn": [ ],
-						"properties": {
-						  "mode": "Incremental",
-						  "templateLink": {
-							"uri": "[variables('creatingStorageAccountUrl')]",
-							"contentVersion": "1.0.0.0"
-						  },
-						  "parameters": {
-							"location": {
-							  "value": "[parameters('location')]"
-							},
-							"vhdStorageAccount": {
-							  "value": "[parameters('vhdStorageAccount')]"
-							},
-							"vhdStorageType": {
-							  "value": "[parameters('vhdStorageType')]"
-							},
-							"vhdStorageGroup": {
-							  "value": "[parameters('vhdStorageGroup')]"
-							}
-						  }
-						}
-				}
-			],
-              "outputs": {
-                "collection": {
-                  "type": "string",
-                  "value": "loop-0 "
-                }
-              }
-            }
-          }
-        },
-
+		 {
+		  "name": "CreatingStorageAccount",
+		  "type": "Microsoft.Resources/deployments",
+		  "apiVersion": "2015-01-01",
+		  "dependsOn": [ ],
+		  "properties": {
+			"mode": "Incremental",
+			"templateLink": {
+			  "uri": "[variables('creatingStorageAccountUrl')]",
+			  "contentVersion": "1.0.0.0"
+			},
+			"parameters": {
+			  "location": {
+				"value": "[parameters('location')]"
+			  },
+			  "vhdStorageAccount": {
+				"value": "[parameters('vhdStorageAccount')]"
+			  },
+			  "vhdStorageType": {
+				"value": "[parameters('vhdStorageType')]"
+			  },
+			  "vhdStorageGroup": {
+				"value": "[parameters('vhdStorageGroup')]"
+			  }
+			}
+      }
+    }
     ],
   "outputs": {
   }
