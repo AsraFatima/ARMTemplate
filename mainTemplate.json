@@ -64,33 +64,59 @@
     },
 
     "resources": [
-      {
-        "name": "CreatingStorageAccount",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "dependsOn": [ ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('creatingStorageAccountUrl')]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "location": {
-              "value": "[parameters('location')]"
+        {
+          "apiVersion": "2015-01-01",
+          "type": "Microsoft.Resources/deployments",
+          "name": "loop-0",
+          "properties": {
+            "mode": "Incremental",
+            "parameters": {
+            
             },
-            "vhdStorageAccount": {
-              "value": "[parameters('vhdStorageAccount')]"
-            },
-            "vhdStorageType": {
-              "value": "[parameters('vhdStorageType')]"
-            },
-            "vhdStorageGroup": {
-              "value": "[parameters('vhdStorageGroup')]"
+            "template": {
+              "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+              "contentVersion": "1.0.0.0",
+              "parameters": {},
+              "variables": {},
+              "resources": [
+                    {
+						"name": "CreatingStorageAccount",
+						"type": "Microsoft.Resources/deployments",
+						"apiVersion": "2015-01-01",
+						"dependsOn": [ ],
+						"properties": {
+						  "mode": "Incremental",
+						  "templateLink": {
+							"uri": "[variables('creatingStorageAccountUrl')]",
+							"contentVersion": "1.0.0.0"
+						  },
+						  "parameters": {
+							"location": {
+							  "value": "[parameters('location')]"
+							},
+							"vhdStorageAccount": {
+							  "value": "[parameters('vhdStorageAccount')]"
+							},
+							"vhdStorageType": {
+							  "value": "[parameters('vhdStorageType')]"
+							},
+							"vhdStorageGroup": {
+							  "value": "[parameters('vhdStorageGroup')]"
+							}
+						  }
+						}
+				}
+			],
+              "outputs": {
+                "collection": {
+                  "type": "string",
+                  "value": "loop-0 "
+                }
+              }
             }
           }
-        }
-      }
+        },
+
     ],
   "outputs": {
   }
