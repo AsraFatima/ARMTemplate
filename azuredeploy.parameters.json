@@ -5,7 +5,6 @@
         "location": { "value": "westus" },
         "vhdStorageAccount": { "value": "customimagesg" },
         "vhdStorageGroup": { "value": "CitrixCustomImage" },
-        "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master" },
-        "_artifactsLocationSasToken": { "value": "" }
+        "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master" }        
     }
 }
