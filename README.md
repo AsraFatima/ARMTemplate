@@ -7,18 +7,6 @@ This template demonstrates the creation of a self-contained XenApp environment i
   * CitrixCustomImageRG
   * Inaddition to above two resource groups, Worker resource groups
 * Storage Account for storing the CustomImages
-* Citrix NetScaler
-* Citrix Virtual Desktop Agents (1 RDSH & 1 Server VDI)
-* RDP JumpBox
-
-After deployment, the components are fully configured and a simple XenApp site is created in a number of steps:
-
-1. A new user-specified Active Directory domain is created and the machines are automatically joined to it.
-2. A SQL server database is configured and a site is created on the XenApp Delivery Controller.
-3. VDAs are provisioned and joined to the new site.
-4. A StoreFront site is created, providing access to published Apps & Desktops.
-5. A certificate is obtained for the deployment from the letsencrypt certificate authority.
-6. NetScaler is configured as a gateway to the deployment.
 
 # Pre-Requisites
  
@@ -28,7 +16,7 @@ Need to understand this so i can document it better.
  
 Click the button below to deploy
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAsraFatima%2FARMTemplate%2Fmaster%2FmainTemplate.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAsraFatima%2FARMTemplate%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
