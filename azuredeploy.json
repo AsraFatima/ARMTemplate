@@ -28,8 +28,7 @@
         "metadata": {
           "description": "Specifies the resource group which should contain the storage account."
         }
-      },
-            
+      },            
       "location": {
         "type": "string",
         "defaultValue": "",
@@ -41,13 +40,15 @@
       "type": "string",
       "metadata": {
         "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
-      }
+      },
+     "defaultValue":"https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
       "metadata": {
         "description": "Auto-generated token to access _artifactsLocation"
-      }
+      },
+     "defaultValue":""
     }
   },
     "variables": {
