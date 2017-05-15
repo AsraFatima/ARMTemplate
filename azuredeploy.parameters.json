@@ -5,7 +5,7 @@
         "location": { "value": "westus" },
         "vhdStorageAccount": { "value": "customimagesg" },
         "vhdStorageGroup": { "value": "CitrixCustomImage" },
-        "_artifactsLocation": { "value": "F:\\NarrowScope\\ARM-Template\\CapacityMgmt-Template\\CapacityMgmt-Template" },
+        "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master" },
         "_artifactsLocationSasToken": { "value": "" }
     }
 }
