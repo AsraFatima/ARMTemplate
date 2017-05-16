@@ -58,6 +58,20 @@
                 "description": "Specifies the Location for the deployment."
             }
         },
+        "VirtualNetworkName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the name of the Virtual Network."
+            }
+        },
+        "VirtualNetworkResourceGroup": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specify the Resource Group  for the Virtual Network."
+            }
+        },
         "_artifactsLocation": {
             "type": "string",
             "metadata": {
@@ -75,6 +89,7 @@
     },
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
+        "createVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'), 'VirtualNetwork-',parameters('newOrExisting'), '.json')]",
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
@@ -112,25 +127,35 @@
                 }
             }
         },
-        {           
+        {
+            "name": "CreatingVirtualNetwork",
+            "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-04-01",
-            "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('virtualNetworkName')]",
+            "dependsOn": [],
             "location": "[resourceGroup().location]",
             "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[variables('addressPrefix')]"
-                    ]
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('createVirtualNetworkUrl')]",
+                    "contentVersion": "1.0.0.0"
                 },
-                "subnets": [
-                    {
-                        "name": "[variables('subnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('subnetPrefix')]"
-                        }
+                "parameter": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "addressPrefix": {
+                        "value": "[variables('addressPrefix')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('subnetName')]"
+                    },
+                    "subnetPrefix": {
+                        "value": "[variables('subnetPrefix')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[variables('virtualNetworkName')]"
                     }
-                ]
+                }
             }
         }
     ],
