@@ -5,7 +5,12 @@
         "location": { "value": "westus" },
         "ImageStorageAccountName": { "value": "customimagesg" },
         "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
-        "newOrExisting": { "value": "existing" },
+        "newOrExisting": { "value": "new" },
+        "VirtualNetworkName": { "value": "MyVNET" },
+        "VirtualNetworkAddressPrefix": { "value": "10.0.0.0/16" },
+        "SubnetName": { "value": "MySubnet" },
+        "SubnetAddressPrefix": { "value": "10.0.0.0/24" },
+        "VirtualNetworkResourceGroup": {"value": "CitrixInfraRG"},
         "MangementType": { "value": "Citrix Cloud Managed" },
         "_artifactsLocationSasToken": { "value": "" }
     }
