@@ -1,0 +1,67 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "metadata": {
+                "Description": "Specifies the location of the storage account."
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "Description": "Specifies the name of the Virtual Network used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "metadata": {
+                "Description": "Specifies the type of storage account, if being created."
+            },
+            "defaultValue": ""
+        },
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "Description": "Specifies the resource group which should contain the storage account."
+            }
+        },
+        "subnetPrefix": {
+            "type": "string",
+            "metadat": {
+                "Description": "Specifies the Subnet prefix for the Virtual Network."
+            }
+        }
+    },
+    "resources": 
+        [
+        {
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "virtualNetwork1",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+        ],
+    "outputs": {
+        "vnetID": {
+            "value": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+            "type": "string"
+        }
+    }
+}
