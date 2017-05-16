@@ -65,6 +65,27 @@
                 "description": "Specifies the name of the Virtual Network."
             }
         },
+        "VirtualNetworkAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "Specify the address prefix for the Virtul Network."
+            }
+        },
+        "SubnetName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the name of the Subnet in the Virutal Network."
+            }
+        },
+        "SubnetAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+                "description": "Specify the Subnet Address Prefix for the Virtual Network."
+            }
+        },
         "VirtualNetworkResourceGroup": {
             "type": "string",
             "defaultValue": "",
@@ -90,21 +111,18 @@
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "createVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'), 'VirtualNetwork-',parameters('newOrExisting'), '.json')]",
-        "addressPrefix": "10.0.0.0/16",
-        "subnetName": "Subnet",
-        "subnetPrefix": "10.0.0.0/24",
-        "nicName": "myVMNic",
-        "virtualNetworkName": "MyVNET",
+        "addressPrefix": "[parameters('VirtualNetworkAddressPrefix')]",
+        "subnetName": "[parameters('SubnetName')]",
+        "subnetPrefix": "[parameters('SubnetAddressPrefix')]",        
+        "virtualNetworkName": "[parameters('VirtualNetworkName')]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
     },
     "resources": [
         {
-            "name": "CreateStorageAccount",
-            "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "dependsOn": [],
-            "resourceGroup": "CitrixCustomImage",
+            "name": "CreateStorageAccount",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -125,20 +143,19 @@
                         "value": "[parameters('ImageStoreResourceGroup')]"
                     }
                 }
-            }
+            },
+            "resourceGroup": "[parameters('ImageStoreResourceGroup')]",
+            "type": "Microsoft.Resources/deployments"
         },
         {
             "name": "CreatingVirtualNetwork",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-04-01",
+            "apiVersion": "2017-05-10",
             "dependsOn": [],
+            "resourceGroup": "[parameters('VirtualNetworkResourceGroup')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('createVirtualNetworkUrl')]",
-                    "contentVersion": "1.0.0.0"
-                },
                 "parameter": {
                     "location": {
                         "value": "[parameters('location')]"
@@ -155,6 +172,10 @@
                     "virtualNetworkName": {
                         "value": "[variables('virtualNetworkName')]"
                     }
+                },
+                "templateLink": {
+                    "uri": "[variables('createVirtualNetworkUrl')]",
+                    "contentVersion": "1.0.0.0"
                 }
             }
         }
