@@ -112,8 +112,7 @@
                 }
             }
         },
-        {
-            "condition": "[equals(parameters('newOrExisting'),'new')]",
+        {           
             "apiVersion": "2017-04-01",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('virtualNetworkName')]",
