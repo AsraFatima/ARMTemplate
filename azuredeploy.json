@@ -1,58 +1,87 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "vhdStorageAccount": {
-        "type": "string",
-        "defaultValue": "",
-        "metadata": {
-          "description": "Specifies the name of the storage account used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
-        }
-      },
-    "vhdStorageType": {
-        "type": "string",
-        "defaultValue": "Standard_LRS",
-        "allowedValues": [
-            "Standard_LRS",
-            "Standard_GRS",
-            "Standard_RAGRS",
-            "Premium_LRS"
-        ],
-        "metadata": {
-            "description": "Specifies the type of storage account, if being created."
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "MangementType": {
+            "type": "string",
+            "defaultValue": "Citrix Cloud Managed",
+            "allowedValues": [
+                "Citrix Cloud Managed",
+                "Customer Managed"
+            ],
+            "metadata": {
+                "description": "Specifies the type of storage account, if being created."
+            }
+        },
+        "newOrExisting": {
+            "type": "string",
+            "defaultValue": "new",
+            "allowedValues": [
+                "new",
+                "existing"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "ImageStorageAccountName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the name of the storage account used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
+            }
+        },
+        "StorageType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "Specifies the type of storage account, if being created."
+            }
+        },
+        "ImageStoreResourceGroup": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the resource group which should contain the storage account."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the Location for the deployment."
+            }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+            },
+            "defaultValue": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Auto-generated token to access _artifactsLocation"
+            },
+            "defaultValue": ""
         }
     },
-      "vhdStorageGroup": {
-	  "type": "string",
-        "defaultValue": "",
-        "metadata": {
-          "description": "Specifies the resource group which should contain the storage account."
-        }
-      },            
-      "location": {
-        "type": "string",
-        "defaultValue": "",
-        "metadata": {
-          "description": "Specifies the Location for the deployment."
-        }
-      },
-    "_artifactsLocation": {
-      "type": "string",
-      "metadata": {
-        "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
-      },
-     "defaultValue":"https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master"
-    },
-    "_artifactsLocationSasToken": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Auto-generated token to access _artifactsLocation"
-      },
-     "defaultValue":""
-    }
-  },
     "variables": {
-        "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]"
+        "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetName": "Subnet",
+        "subnetPrefix": "10.0.0.0/24",
+        "nicName": "myVMNic",
+        "virtualNetworkName": "MyVNET",
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
     },
     "resources": [
         {
@@ -72,22 +101,39 @@
                         "value": "[parameters('location')]"
                     },
                     "vhdStorageAccount": {
-                        "value": "[parameters('vhdStorageAccount')]"
+                        "value": "[parameters('ImageStorageAccountName')]"
                     },
                     "vhdStorageType": {
-                        "value": "[parameters('vhdStorageType')]"
+                        "value": "[parameters('StorageType')]"
                     },
                     "vhdStorageGroup": {
-                        "value": "[parameters('vhdStorageGroup')]"
+                        "value": "[parameters('ImageStoreResourceGroup')]"
                     }
                 }
-            },           
-            "tags": {
-                "displayName": "InfraStorage"
-            },
-            "kind": "Storage"
+            }
+        },
+        {
+            "condition": "[equals(parameters('newOrExisting'),'new')]",
+            "apiVersion": "2017-04-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworkName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
         }
     ],
-  "outputs": {
-  }
+    "outputs": {}
 }
