@@ -29,7 +29,7 @@
         },
         "subnetPrefix": {
             "type": "string",
-            "metadat": {
+            "metadata": {
                 "Description": "Specifies the Subnet prefix for the Virtual Network."
             }
         }
