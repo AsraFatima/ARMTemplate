@@ -3,8 +3,10 @@
   "contentVersion": "1.0.0.0",
     "parameters": {
         "location": { "value": "westus" },
-        "vhdStorageAccount": { "value": "customimagesg" },
-        "vhdStorageGroup": { "value": "CitrixCustomImage" },
-        "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master" }        
+        "ImageStorageAccountName": { "value": "customimagesg" },
+        "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
+        "newOrExisting": { "value": "existing" },
+        "MangementType": { "value": "Citrix Cloud Managed" },
+        "_artifactsLocationSasToken": { "value": "" }
     }
 }
