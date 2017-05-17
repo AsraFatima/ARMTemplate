@@ -113,7 +113,7 @@
         "createVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'), 'VirtualNetwork-',parameters('newOrExisting'), '.json')]",
         "addressPrefix": "[parameters('VirtualNetworkAddressPrefix')]",
         "subnetName": "[parameters('SubnetName')]",
-        "subnetPrefix": "[parameters('SubnetAddressPrefix')]",        
+        "subnetPrefix": "[parameters('SubnetAddressPrefix')]",
         "virtualNetworkName": "[parameters('VirtualNetworkName')]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
@@ -121,6 +121,8 @@
     "resources": [
         {
             "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('ImageStoreResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
             "dependsOn": [],
             "name": "CreateStorageAccount",
             "properties": {
@@ -143,23 +145,21 @@
                         "value": "[parameters('ImageStoreResourceGroup')]"
                     }
                 }
-            },
-            "resourceGroup": "[parameters('ImageStoreResourceGroup')]",
-            "type": "Microsoft.Resources/deployments"
+            }
+
         },
         {
-            "name": "CreatingVirtualNetwork",
+            "apiVersion": "2017-05-10",           
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
             "dependsOn": [],
-            "resourceGroup": "[parameters('VirtualNetworkResourceGroup')]",
-            "location": "[resourceGroup().location]",
+            "name": "CreatingVirtualNetwork",
             "properties": {
                 "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('createVirtualNetworkUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
                 "parameter": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
                     "addressPrefix": {
                         "value": "[variables('addressPrefix')]"
                     },
@@ -170,12 +170,8 @@
                         "value": "[variables('subnetPrefix')]"
                     },
                     "virtualNetworkName": {
-                        "value": "[variables('virtualNetworkName')]"
+                        "value": "[parameters('VirtualNetworkName')]"
                     }
-                },
-                "templateLink": {
-                    "uri": "[variables('createVirtualNetworkUrl')]",
-                    "contentVersion": "1.0.0.0"
                 }
             }
         }
