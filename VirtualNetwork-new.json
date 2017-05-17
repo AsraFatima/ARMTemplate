@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "location": {
+            "type": "string",
+            "metadata": {
+                "Description": "Specifies the location of the storage account."
+            }
+        },
         "virtualNetworkName": {
             "type": "string",
             "metadata": {
@@ -23,44 +29,37 @@
         },
         "subnetPrefix": {
             "type": "string",
-            "metadata": {
-                "Description": "Specifies the Subnet prefix for the Virtual Network."
-            }
-        },
-        "location": {
-            "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Specifies the location of the Virtual Network."
+                "description": "Subnet prefix for the Virtual Network"
             }
         }
     },
-    "resources": 
-        [
-            {
-                "apiVersion": "2015-06-15",
-                "type": "Microsoft.Network/virtualNetworks",
-                "name": "[parameters('virtualNetworkName')]",
-                "location": "[parameters('location')]",
-                "properties": {
-                    "addressSpace": {
-                        "addressPrefixes": [
-                            "[parameters('addressPrefix')]"
-                        ]
-                    },
-                    "subnets": [
-                        {
-                            "name": "[parameters('subnetName')]",
-                            "properties": {
-                                "addressPrefix": "[parameters('subnetPrefix')]"
-                            }
-                        }
+    "resources": [
+        {
+            "apiversion": "2015-06-15",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('addressPrefix')]"
                     ]
-                }
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix')]"
+                        }
+                    }
+                ]
             }
-        ],
+        }
+    ],
     "outputs": {
-        "vnetID": {
+        "storageAccountId": {
             "value": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
             "type": "string"
         }
