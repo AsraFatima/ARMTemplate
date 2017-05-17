@@ -93,6 +93,26 @@
                 "description": "Specify the Resource Group  for the Virtual Network."
             }
         },
+        "ServicePrincipalId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specify the Application Id of the Service Principal."
+            }
+        },
+        "BuiltInRoleType": {
+            "type": "string",
+            "defaultValue": "Contributor",
+            "allowedValues": [
+                "Owner",
+                "Contributor",
+                "Reader",
+                "Virtual Machine Contributor"
+            ],
+            "metadata": {
+                "description": "Specify the Role that needs to be assigned to the Resource Group."
+            }
+        },
         "_artifactsLocation": {
             "type": "string",
             "metadata": {
@@ -110,7 +130,12 @@
     },
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
-        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('newOrExisting'),'.json')]"        
+        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('newOrExisting'),'.json')]",
+        "VirtualMachineContributor": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'd73bb868-a0df-4d4d-bd69-98a00b01fccb')]",
+        "Owner": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+        "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "Reader": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+        "scope": "[resourceGroup().id]"
     },
     "resources": [
         {
@@ -142,7 +167,7 @@
             }
 
         },
-         {
+        {
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('VirtualNetworkResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
@@ -173,6 +198,16 @@
                 }
             }
 
+        },
+        {
+            "apiVersion": "2014-07-01-preview",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "name": "Assign Permissions",
+            "properties": {
+                "roleDefinitionId": "[variables(parameters('BuiltInRoleType'))]",
+                "principalId": "[parameters('ServicePrincipalId')]",
+                "scope": "[variables('scope')]"
+            }
         }
     ],
     "outputs": {}
