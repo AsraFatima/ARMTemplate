@@ -110,7 +110,7 @@
     },
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
-        "createVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'), 'VirtualNetwork-',parameters('newOrExisting'), '.json')]",
+        "createVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'), 'VirtualNetwork-new', '.json')]",
         "addressPrefix": "[parameters('VirtualNetworkAddressPrefix')]",
         "subnetName": "[parameters('SubnetName')]",
         "subnetPrefix": "[parameters('SubnetAddressPrefix')]",
