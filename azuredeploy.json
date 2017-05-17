@@ -110,9 +110,7 @@
     },
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
-        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-new','.json')]",
-        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
+        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-new','.json')]"        
     },
     "resources": [
         {
