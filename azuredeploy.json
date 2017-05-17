@@ -111,10 +111,6 @@
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-new','.json')]",
-        "addressPrefix": "[parameters('VirtualNetworkAddressPrefix')]",
-        "subnetName": "[parameters('SubnetName')]",
-        "subnetPrefix": "[parameters('SubnetAddressPrefix')]",
-        "virtualNetworkName": "[parameters('VirtualNetworkName')]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
     },
@@ -164,14 +160,17 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "vhdStorageAccount": {
-                        "value": "[parameters('ImageStorageAccountName')]"
+                    "virtualNetworkName": {
+                        "value": "[parameters('VirtualNetworkName')]"
                     },
-                    "vhdStorageType": {
-                        "value": "[parameters('StorageType')]"
+                    "addressPrefix": {
+                        "value": "[parameters('VirtualNetworkAddressPrefix')]"
                     },
-                    "vhdStorageGroup": {
-                        "value": "[parameters('ImageStoreResourceGroup')]"
+                    "subnetName": {
+                        "value": "[parameters('SubnetName')]"
+                    },
+                    "subnetPrefix": {
+                        "value": "[parameters('SubnetAddressPrefix')]"
                     }
                 }
             }
