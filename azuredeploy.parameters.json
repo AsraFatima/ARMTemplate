@@ -12,7 +12,7 @@
         "SubnetName": { "value": "MySubnet" },
         "SubnetAddressPrefix": { "value": "10.0.0.0/24" },
         "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG" },
-        "ServicePrincipalId": { "value": "8a0b5c15-7964-42c9-abde-dc9333ef20a9" },
+        "ServicePrincipalId": { "value": "8dfd0809-9ff2-4ed3-81d7-63569a2c8101" },
         "BuiltInRoleType": {"value": "Contributor"},
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }
