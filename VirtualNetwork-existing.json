@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-       "virtualNetworkName": {
+        "virtualNetworkName": {
             "type": "string",
             "metadata": {
                 "Description": "Specifies the name of the Virtual Network used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
@@ -27,8 +27,20 @@
             "metadata": {
                 "description": "Subnet prefix for the Virtual Network"
             }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the Location for the deployment."
+            }
         }
     },
     "resources": [],
-    "outputs": {}
+    "outputs": {
+        "VnetID": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]"
+        }
+    }
 }
