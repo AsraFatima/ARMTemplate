@@ -110,7 +110,7 @@
     },
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
-        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-new','.json')]"        
+        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('newOrExisting'),'.json')]"        
     },
     "resources": [
         {
