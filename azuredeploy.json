@@ -160,6 +160,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameter": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
                     "addressPrefix": {
                         "value": "[variables('addressPrefix')]"
                     },
