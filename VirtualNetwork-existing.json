@@ -2,13 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string",
-            "metadata": {
-                "Description": "Specifies the location of the storage account."
-            }
-        },
-        "virtualNetworkName": {
+       "virtualNetworkName": {
             "type": "string",
             "metadata": {
                 "Description": "Specifies the name of the Virtual Network used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
@@ -36,10 +30,5 @@
         }
     },
     "resources": [],
-    "outputs": {
-        "storageAccountId": {
-            "value": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-            "type": "string"
-        }
-    }
+    "outputs": {}
 }
