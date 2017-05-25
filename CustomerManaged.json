@@ -23,11 +23,14 @@
             }
         }
     },
+    "variables": {
+        "roleAssignmentId": "[toLower(substring(concat('ctxm-',uniqueString(subscription().subscriptionId,resourceGroup().id)), 0, 13))]"
+    },
     "resources": [
         {
             "apiVersion": "2014-07-01-preview",
             "type": "Microsoft.Authorization/roleAssignments",
-            "name": "9344a744-e92a-4c7b-8e30-a4db906ef848",
+            "name": "[variables('roleAssignmentId')]",
             "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
