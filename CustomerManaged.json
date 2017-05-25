@@ -31,7 +31,7 @@
         }
     },
     "variables": {
-        "roleAssignmentId": "[toLower(substring(concat('ctxm-',uniqueString(subscription().subscriptionId,resourceGroup().id)), 0, 13))]"
+        
     },
     "resources": [
         {
