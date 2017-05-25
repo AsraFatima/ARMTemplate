@@ -37,5 +37,5 @@ Right now few of the features used in the template are not supported in GithUb. 
 * Launch Windows Powershell Command prompt.
 * Login to the Azure Account and Select the desired Subscription using the following CmdLets
     Login-AzureRmAccount
-    Select-AzureRmSubscription -SubscriptionName <SubscriptonName>
- * Run Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation <AzureRegion> -ResourceGroupName <InfrastructureResourceGroup>
+    Select-AzureRmSubscription -SubscriptionName "SubscriptonName"
+ * Run Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation "AzureRegion" -ResourceGroupName "InfrastructureResourceGroupName"
