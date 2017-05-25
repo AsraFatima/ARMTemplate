@@ -1,7 +1,6 @@
 # Citrix Azure Capacity Management Template
 
-This template can be used to assign permissions to the Resource groups and Subscriptions as per the KB Article - 
-<a href ="https://support.citrix.com/article/CTX224110" target="_blank" > :
+This template can be used to assign permissions to the Resource groups and Subscriptions as per the KB Article <a href ="https://support.citrix.com/article/CTX224110" target="_blank">
 
 # Pre-Requisites
  
