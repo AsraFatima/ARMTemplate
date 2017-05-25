@@ -32,11 +32,11 @@ Template parameters:
 Deploy the Template:
 
 Right now few of the features used in the template are not supported in GithUb. So please update perform the following steps to execute this template:
-* Download the Azure Powershell Version 4.0.1 from https://github.com/Azure/azure-powershell/releases/tag/v4.0.1--May2017 
+* Upgrade Azure Powershell 4.0.1 from https://github.com/Azure/azure-powershell/releases/tag/v4.0.1--May2017 
+* Download the Github files to your local machines.
 * Update the azuredeploy.parameters.json.
 * Launch Windows Powershell Command prompt.
 * Login to the Azure Account and Select the desired Subscription using the following CmdLets
-    # Login-AzureRmAccount
-    # Select-AzureRmSubscription -SubscriptionName <SubscriptonName>
- * 
-* 
+    Login-AzureRmAccount
+    Select-AzureRmSubscription -SubscriptionName <SubscriptonName>
+ * Run Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation <AzureRegion> -ResourceGroupName <InfrastructureResourceGroup>
