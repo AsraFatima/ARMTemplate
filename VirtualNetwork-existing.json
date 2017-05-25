@@ -8,26 +8,6 @@
                 "Description": "Specifies the name of the Virtual Network used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
             }
         },
-        "addressPrefix": {
-            "type": "string",
-            "metadata": {
-                "Description": "Specifies the type of storage account, if being created."
-            },
-            "defaultValue": ""
-        },
-        "subnetName": {
-            "type": "string",
-            "metadata": {
-                "Description": "Specifies the resource group which should contain the storage account."
-            }
-        },
-        "subnetPrefix": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Subnet prefix for the Virtual Network"
-            }
-        },
         "location": {
             "type": "string",
             "defaultValue": "",
