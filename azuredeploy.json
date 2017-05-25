@@ -4,9 +4,9 @@
     "parameters": {
         "MangementType": {
             "type": "string",
-            "defaultValue": "Citrix Cloud Managed",
+            "defaultValue": "Customer Managed",
             "allowedValues": [
-                "Citrix Cloud Managed",
+                "Citrix Managed",
                 "Customer Managed"
             ],
             "metadata": {
@@ -106,6 +106,16 @@
         }
     },
     "variables": {
+        "assignPermission": {
+            "Citrix Managed": {
+                "assignPermissionUrl": "[concat(parameters('_artifactsLocation'), 'CitrixManaged', '.json')]"
+            },
+            "Customer Managed": {
+                "assignPermissionUrl": "[concat(parameters('_artifactsLocation'), 'CustomerManaged', '.json')]"
+            }
+        },
+        "currentPermission": "[variables('assignPermission')[parameters('MangementType')]]",
+        "assignPermissionTemplateUrl": "[variables('currentPermission').assignPermissionUrl]",
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('VirtualNetworknewOrExisting'),'.json')]",
         "VirtualMachineContributor": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
@@ -165,13 +175,27 @@
 
         },
         {
-            "apiVersion": "2014-07-01-preview",
-            "type": "Microsoft.Authorization/roleAssignments",
-            "name": "9344a744-e92a-4c7b-8e30-a4db906ef848",
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [],
+            "name": "AssigningResourcePermissions",
             "properties": {
-                "roleDefinitionId": "[variables('VirtualMachineContributor')]",
-                "principalId": "[parameters('ServicePrincipalId')]",
-                "scope": "[variables('scope')]"
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('assignPermissionTemplateUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "roleDefinitionId": {
+                        "value": "[variables('VirtualMachineContributor')]"
+                    },
+                    "principalId": {
+                        "value": "[parameters('ServicePrincipalId')]"
+                    },
+                    "scope": {
+                        "value": "[variables('scope')]"
+                    }
+                }
             }
         }
     ],

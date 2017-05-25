@@ -2,18 +2,15 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "MangementType": { "value": "Citrix Cloud Managed" },
+        "MangementType": { "value": "Customer Managed" },
         "location": { "value": "westus" },
-        "newOrExisting": { "value": "new" },
-        "ImageStorageAccountName": { "value": "customimage01" },
+        "StorageAccountnewOrExisting": { "value": "new" },
+        "VirtualNetworknewOrExisting": { "value": "new" },
+        "ImageStorageAccountName": { "value": "customimage23" },
         "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
-        "VirtualNetworkName": { "value": "MyVNET" },
-        "VirtualNetworkAddressPrefix": { "value": "10.0.0.0/16" },
-        "SubnetName": { "value": "MySubnet" },
-        "SubnetAddressPrefix": { "value": "10.0.0.0/24" },
-        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG" },
-        "ServicePrincipalId": { "value": "8dfd0809-9ff2-4ed3-81d7-63569a2c8101" },
-        "BuiltInRoleType": {"value": "Contributor"},
+        "VirtualNetworkName": { "value": "MyVNET01" },
+        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG01" },
+        "ServicePrincipalId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" },
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }
 }
