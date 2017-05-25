@@ -13,7 +13,7 @@
                 "description": "Specifies the type of storage account, if being created."
             }
         },
-        "newOrExisting": {
+        "StorageAccountnewOrExisting": {
             "type": "string",
             "defaultValue": "new",
             "allowedValues": [
@@ -58,32 +58,22 @@
                 "description": "Specifies the Location for the deployment."
             }
         },
+        "VirtualNetworknewOrExisting": {
+            "type": "string",
+            "defaultValue": "new",
+            "allowedValues": [
+                "new",
+                "existing"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
         "VirtualNetworkName": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
                 "description": "Specifies the name of the Virtual Network."
-            }
-        },
-        "VirtualNetworkAddressPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/16",
-            "metadata": {
-                "description": "Specify the address prefix for the Virtul Network."
-            }
-        },
-        "SubnetName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Specifies the name of the Subnet in the Virutal Network."
-            }
-        },
-        "SubnetAddressPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/24",
-            "metadata": {
-                "description": "Specify the Subnet Address Prefix for the Virtual Network."
             }
         },
         "VirtualNetworkResourceGroup": {
@@ -98,19 +88,6 @@
             "defaultValue": "",
             "metadata": {
                 "description": "Specify the Application Id of the Service Principal."
-            }
-        },
-        "BuiltInRoleType": {
-            "type": "string",
-            "defaultValue": "Contributor",
-            "allowedValues": [
-                "Owner",
-                "Contributor",
-                "Reader",
-                "Virtual Machine Contributor"
-            ],
-            "metadata": {
-                "description": "Specify the Role that needs to be assigned to the Resource Group."
             }
         },
         "_artifactsLocation": {
@@ -130,11 +107,8 @@
     },
     "variables": {
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
-        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('newOrExisting'),'.json')]",
-        "VirtualMachineContributor": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'd73bb868-a0df-4d4d-bd69-98a00b01fccb')]",
-        "Owner": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
-        "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-        "Reader": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+        "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('VirtualNetworknewOrExisting'),'.json')]",
+        "VirtualMachineContributor": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
         "scope": "[resourceGroup().id]"
     },
     "resources": [
@@ -185,15 +159,6 @@
                     },
                     "virtualNetworkName": {
                         "value": "[parameters('VirtualNetworkName')]"
-                    },
-                    "addressPrefix": {
-                        "value": "[parameters('VirtualNetworkAddressPrefix')]"
-                    },
-                    "subnetName": {
-                        "value": "[parameters('SubnetName')]"
-                    },
-                    "subnetPrefix": {
-                        "value": "[parameters('SubnetAddressPrefix')]"
                     }
                 }
             }
@@ -202,9 +167,9 @@
         {
             "apiVersion": "2014-07-01-preview",
             "type": "Microsoft.Authorization/roleAssignments",
-            "name": "DCE46385-7B6B-4E6B-87ED-F011289008D3",
+            "name": "9344a744-e92a-4c7b-8e30-a4db906ef848",
             "properties": {
-                "roleDefinitionId": "[variables(parameters('BuiltInRoleType'))]",
+                "roleDefinitionId": "[variables('VirtualMachineContributor')]",
                 "principalId": "[parameters('ServicePrincipalId')]",
                 "scope": "[variables('scope')]"
             }
