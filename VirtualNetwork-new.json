@@ -8,26 +8,6 @@
                 "Description": "Specifies the name of the Virtual Network used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
             }
         },
-        "addressPrefix": {
-            "type": "string",
-            "metadata": {
-                "Description": "Specifies the type of storage account, if being created."
-            },
-            "defaultValue": ""
-        },
-        "subnetName": {
-            "type": "string",
-            "metadata": {
-                "Description": "Specifies the resource group which should contain the storage account."
-            }
-        },
-        "subnetPrefix": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Subnet prefix for the Virtual Network"
-            }
-        },
         "location": {
             "type": "string",
             "defaultValue": "",
@@ -36,23 +16,29 @@
             }
         }
     },
+    "variables": {
+        "vnetAddressRange": "10.0.0.0/16",
+        "subnetName": "Subnet",
+        "subnetAddressRange": "10.0.0.0/20"
+    },
     "resources": [
         {
-            "apiVersion": "2015-05-01-preview",
-            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2015-06-15",
             "name": "[parameters('virtualNetworkName')]",
+            "type": "Microsoft.Network/virtualNetworks",
             "location": "[parameters('location')]",
+            "tags": {
+                "displayName": "VirtualNetwork"
+            },
             "properties": {
                 "addressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('addressPrefix')]"
-                    ]
+                    "addressPrefixes": [ "[variables('vnetAddressRange')]" ]
                 },
                 "subnets": [
                     {
-                        "name": "[parameters('subnetName')]",
+                        "name": "[variables('subnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('subnetPrefix')]"
+                            "addressPrefix": "[variables('subnetAddressRange')]"
                         }
                     }
                 ]
