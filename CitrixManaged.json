@@ -31,7 +31,7 @@
         }
     },
     "variables": {
-        "roleAssignmentId": "[toLower(substring(concat('ctxm-',uniqueString(subscription().subscriptionId,resourceGroup().id)), 0, 13))]"
+        "scope": "[concat('/subscriptions/',parameters('scope'))]"
     },
     "resources": [
         {
@@ -41,7 +41,7 @@
             "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
-                "scope": "[parameters('scope')]"
+                "scope": "[variables('scope')]"
             }
         }
     ],
