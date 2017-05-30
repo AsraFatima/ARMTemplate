@@ -22,19 +22,19 @@
                 "description": "Specifies the Location for the deployment."
             }
         },
-        "_artifactsLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
-            },
-            "defaultValue": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
-        },
         "resourceGroupCount": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
                 "description": "Number of resource groups"
             }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+            },
+            "defaultValue": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
         }
     },
     "variables": {
