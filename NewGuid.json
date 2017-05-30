@@ -35,7 +35,7 @@
     "resources": [],
     "outputs": {
         "guid": {
-            "type": "string",
+            "type": "array",
             "value": "[variables('tempguid')]"
         }
     }

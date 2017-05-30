@@ -199,19 +199,27 @@
             }
 
         },
-        {
+       {
             "apiVersion": "2015-01-01",
-            "name": "GenerateGuid",
+            "name": "[concat('GenerateGuid',copyIndex())]",
             "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "incremental",
-                "templateLink": {
-                    "uri": "[variables('generateGuidTemplateUrl')]",
-                    "contentVersion": "1.0.0.0"
+            "copy": {
+                "name": "guidCopy",
+                "count": "[variables('resourceGroupCount')]"
+            },
+        "properties": {
+            "mode": "incremental",
+            "templateLink": {
+                "uri": "[variables('generateGuidTemplateUrl')]",
+                "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+                "seed": {
+                    "value": "[string(copyIndex())]"
                 }
-
             }
-        },
+            }
+        }, 
         {
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
@@ -233,7 +241,7 @@
                         "value": "[parameters('ServicePrincipalId')]"
                     },
                     "roleAssignmentId": {
-                        "value": "[reference('GenerateGuid').outputs.guid.value]"
+                        "value": "[reference('GenerateGuid').outputs.guid[copyIndex()].value]"
                     },
                     "resourceGroupCount": {
                         "value": "[variables('resourceGroupCount')]"
