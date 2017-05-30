@@ -160,9 +160,11 @@
             "templateLink": {
                 "uri": "[variables('generateGuidTemplateUrl')]",
                 "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+                "seed": { "value": "[string(copyIndex())]" }
             }
-
-        }
+            }
         },
         {
             "apiVersion": "2017-05-10",
@@ -183,18 +185,23 @@
                 },
                 "parameters": {
                     "roleDefinitionId": {
+                        "type": "string",
                         "value": "[variables('roleDefinitionId')]"
                     },
                     "principalId": {
+                        "type": "string",
                         "value": "[parameters('ServicePrincipalId')]"
                     },
                     "roleAssignmentId": {
+                        "type": "string",
                         "value": "[reference(concat('GenerateGuid',copyIndex())).outputs.guid.value]"
                     },
                     "resourceGroupCount": {
+                        "type": "int",
                         "value": "[variables('resourceGroupCount')]"
                     },
                     "scope": {
+                        "type": "string",
                         "value": "[variables('roleScope')]"
                     }
                 }
