@@ -2,6 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+       "SubscriptionId": {
+          "type": "string",
+          "defaultValue": "2498e3dd-307d-4f0d-bc19-bdc139ce0c30",
+          "metadata": {
+            "description": "Subscription ID GUID"
+          }
+        },
         "MangementType": {
             "type": "string",
             "defaultValue": "Customer Managed",
@@ -12,6 +19,23 @@
             "metadata": {
                 "description": "Specifies the type of storage account, if being created."
             }
+        },
+      "ServicePrincipalId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specify the Application Id of the Service Principal."
+            }
+        },
+        "ResourceGroup": {
+          "type": "array",
+          "defaultValue": [
+            "CloudDep",
+            "CloudDep"
+          ],
+          "metadata": {
+            "description": "Input array for resource group names."
+          }
         },
         "StorageAccountnewOrExisting": {
             "type": "string",
@@ -81,13 +105,6 @@
             "defaultValue": "",
             "metadata": {
                 "description": "Specify the Resource Group  for the Virtual Network."
-            }
-        },
-        "ServicePrincipalId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Specify the Application Id of the Service Principal."
             }
         },
         "_artifactsLocation": {
