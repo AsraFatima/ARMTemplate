@@ -212,9 +212,6 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "_artifactsLocation": {
-                        "value": "[parameters('_artifactsLocation')]"
-                    },
                     "resourceGroupCount": {
                         "value": "[length(parameters('ResourceGroup'))]"
                     },

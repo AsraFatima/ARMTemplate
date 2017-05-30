@@ -28,18 +28,11 @@
             "metadata": {
                 "description": "Number of resource groups"
             }
-        },
-        "_artifactsLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
-            },
-            "defaultValue": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
         }
-
     },
     "variables": {
-        "generateGuidTemplateUrl": "[concat(parameters('_artifactsLocation'), 'NewGuid', '.json')]"
+        "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/",
+        "generateGuidTemplateUrl": "[concat(variables('_artifactsLocation'), 'NewGuid', '.json')]"
     },
     "resources": [
         {
