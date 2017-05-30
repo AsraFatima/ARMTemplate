@@ -6,10 +6,10 @@
         "location": { "value": "westus" },
         "StorageAccountnewOrExisting": { "value": "new" },
         "VirtualNetworknewOrExisting": { "value": "new" },
-        "ImageStorageAccountName": { "value": "customimage22" },
+        "ImageStorageAccountName": { "value": "customimage38" },
         "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
-        "VirtualNetworkName": { "value": "MyVNET22" },
-        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG22" },
+        "VirtualNetworkName": { "value": "MyVNET38" },
+        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG38" },
         "ServicePrincipalId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" },
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }

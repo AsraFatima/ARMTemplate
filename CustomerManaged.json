@@ -28,17 +28,10 @@
             "metaData": {
                 "description": "RoleAssignment Id for the Service Principal."
             }
-        },
-        "ResourceGroup": {
-            "type": "array",
-            "defaultValue": [],
-            "metadata": {
-                "description": "Resource Groups."
-            }
         }
     },
     "variables": {
-        "roleScope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',parameters('ResourceGroup')[0])]"
+       
     },
     "resources": [
         {
@@ -48,7 +41,7 @@
             "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
-                "scope": "[variables('roleScope')]"
+                "scope": "[parameters('scope')]"
             }
         }
     ],
