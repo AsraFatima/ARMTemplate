@@ -215,7 +215,7 @@
             },
             "parameters": {
                 "seed": {
-                    "value": "[string(copyIndex())]"
+                    "value": "[copyIndex()]"
                 }
             }
             }
@@ -228,7 +228,7 @@
                 "[concat('Microsoft.Resources/deployments/GenerateGuid', copyIndex())]"
             ],
             "copy": {
-                "name": "AssignPermissions",
+                "name": "assignPermissions",
                 "count": "[variables('resourceGroupCount')]"
             },
             "properties": {
@@ -237,7 +237,6 @@
                     "uri": "[variables('assignPermissionTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
                 },
-
                 "parameters": {
                     "roleDefinitionId": {
                         "value": "[variables('roleDefinitionId')]"
