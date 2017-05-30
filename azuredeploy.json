@@ -147,58 +147,6 @@
 
     },
     "resources": [
-        {
-            "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('ImageStoreResourceGroup')]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [],
-            "name": "CreateStorageAccount",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('creatingStorageAccountUrl')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "vhdStorageAccount": {
-                        "value": "[parameters('ImageStorageAccountName')]"
-                    },
-                    "vhdStorageType": {
-                        "value": "[parameters('StorageType')]"
-                    },
-                    "vhdStorageGroup": {
-                        "value": "[parameters('ImageStoreResourceGroup')]"
-                    }
-                }
-            }
-
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('VirtualNetworkResourceGroup')]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [],
-            "name": "CreatingVirtualNetwork",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('creatingVirtualNetworkUrl')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "virtualNetworkName": {
-                        "value": "[parameters('VirtualNetworkName')]"
-                    }
-                }
-            }
-
-        },
        {
             "apiVersion": "2015-01-01",
             "name": "[concat('GenerateGuid',copyIndex())]",
@@ -212,13 +160,9 @@
             "templateLink": {
                 "uri": "[variables('generateGuidTemplateUrl')]",
                 "contentVersion": "1.0.0.0"
-            },
-            "parameters": {
-                "seed": {
-                    "value": "[string(copyIndex())]"
-                }
             }
-            }
+
+        }
         },
         {
             "apiVersion": "2017-05-10",
@@ -243,9 +187,6 @@
                     },
                     "principalId": {
                         "value": "[parameters('ServicePrincipalId')]"
-                    },
-                    "roleAssignmentId": {
-                        "value": "[reference(concat('GenerateGuid',copyIndex())).outputs.guid[copyIndex()].value]"
                     },
                     "resourceGroupCount": {
                         "value": "[variables('resourceGroupCount')]"
