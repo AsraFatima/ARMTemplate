@@ -23,7 +23,7 @@
             }
         },
         "resourceGroupCount": {
-            "type": "string",
+            "type": "int",
             "defaultValue": "",
             "metadata": {
                 "description": "Number of resource groups"
