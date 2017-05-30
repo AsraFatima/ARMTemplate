@@ -224,7 +224,7 @@
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/GenerateGuid', copyIndex())]"
+                "Microsoft.Resources/deployments/GenerateGuid"
             ],
             "name": "AssigningResourcePermissions",
             "properties": {
