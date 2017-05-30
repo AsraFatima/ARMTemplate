@@ -2,12 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Subscription ID GUID"
-            }
+       "SubscriptionId": {
+          "type": "string",
+          "defaultValue": "2498e3dd-307d-4f0d-bc19-bdc139ce0c30",
+          "metadata": {
+            "description": "Subscription ID GUID"
+          }
         },
         "MangementType": {
             "type": "string",
@@ -20,7 +20,7 @@
                 "description": "Specifies the type of storage account, if being created."
             }
         },
-        "ServicePrincipalId": {
+      "ServicePrincipalId": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
@@ -28,14 +28,14 @@
             }
         },
         "ResourceGroup": {
-            "type": "array",
-            "defaultValue": [
-                "CloudDep",
-                "CloudDep"
-            ],
-            "metadata": {
-                "description": "Input array for resource group names."
-            }
+          "type": "array",
+          "defaultValue": [
+            "CloudDep",
+            "CloudDep"
+          ],
+          "metadata": {
+            "description": "Input array for resource group names."
+          }
         },
         "StorageAccountnewOrExisting": {
             "type": "string",
@@ -127,7 +127,7 @@
             "Citrix Managed": {
                 "assignPermissionUrl": "[concat(parameters('_artifactsLocation'), 'CitrixManaged', '.json')]",
                 "roleDefinition": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "scope": "[parameters('SubscriptionId')]"
+                "scope": "[subscription().subscriptionId]"
             },
             "Customer Managed": {
                 "assignPermissionUrl": "[concat(parameters('_artifactsLocation'), 'CustomerManaged', '.json')]",
@@ -137,14 +137,16 @@
         },
         "currentPermission": "[variables('assignPermission')[parameters('MangementType')]]",
         "assignPermissionTemplateUrl": "[variables('currentPermission').assignPermissionUrl]",
-        "generateGuidTemplateUrl": "[concat(parameters('_artifactsLocation'), 'NewGuid', '.json')]",
+
         "roleDefinitionId": "[variables('currentPermission').roleDefinition]",
         "roleScope": "[variables('currentPermission').scope]",
-        "resourceGroupCount": "[length(parameters('ResourceGroup'))]",
+        "generateGuidTemplateUrl": "[concat(parameters('_artifactsLocation'), 'NewGuid', '.json')]",
+
+
 
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('VirtualNetworknewOrExisting'),'.json')]"
-
+        
     },
     "resources": [
         {
@@ -159,6 +161,7 @@
                 }
             }
         },
+               
         {
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
