@@ -7,16 +7,16 @@
         "ResourceGroup": {
             "value": [
                 "CitrixCustomImage",
-                "CitrixInfraRG36"
+                "CitrixInfraRG37"
             ]
         },
         "location": { "value": "westus" },
         "StorageAccountnewOrExisting": { "value": "new" },
         "VirtualNetworknewOrExisting": { "value": "new" },
-        "ImageStorageAccountName": { "value": "customimage36" },
+        "ImageStorageAccountName": { "value": "customimage37" },
         "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
-        "VirtualNetworkName": { "value": "MyVNET36" },
-        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG36" },
+        "VirtualNetworkName": { "value": "MyVNET37" },
+        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG37" },
         "ServicePrincipalId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" },
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }
