@@ -208,12 +208,8 @@
                 "templateLink": {
                     "uri": "[variables('generateGuidTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "seed": {
-                        "value": "[string(copyIndex())]"
-                    }
                 }
+
             }
         },
         {
