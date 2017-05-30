@@ -195,14 +195,14 @@
                     "roleAssignmentId": {
                         "type": "string",
                         "value": "[reference(concat('GenerateGuid',copyIndex())).outputs.guid.value]"
-                    },
+                    },                   
                     "resourceGroupCount": {
                         "type": "int",
                         "value": "[variables('resourceGroupCount')]"
                     },
                     "scope": {
                         "type": "string",
-                        "value": "[variables('roleScope')]"
+                        "value": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/', parameters('ResourceGroup')[copyIndex()],'.id')]"
                     }
                 }
             }

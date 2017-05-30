@@ -37,9 +37,9 @@
             }
         }
     },
-    "variables": {
+    "variables": {       
         "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
-        
+
     },
     "resources": [        
         {
