@@ -215,7 +215,7 @@
             },
             "parameters": {
                 "seed": {
-                    "value": "[copyIndex()]"
+                    "value": "[string(copyIndex())]"
                 }
             }
             }
