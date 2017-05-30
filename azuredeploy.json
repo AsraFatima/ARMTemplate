@@ -2,12 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-       "SubscriptionId": {
-          "type": "string",
-          "defaultValue": "",
-          "metadata": {
-            "description": "Subscription ID GUID"
-          }
+        "SubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Subscription ID GUID"
+            }
         },
         "MangementType": {
             "type": "string",
@@ -20,7 +20,7 @@
                 "description": "Specifies the type of storage account, if being created."
             }
         },
-      "ServicePrincipalId": {
+        "ServicePrincipalId": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
@@ -28,14 +28,14 @@
             }
         },
         "ResourceGroup": {
-          "type": "array",
-          "defaultValue": [
-            "CloudDep",
-            "CloudDep"
-          ],
-          "metadata": {
-            "description": "Input array for resource group names."
-          }
+            "type": "array",
+            "defaultValue": [
+                "CloudDep",
+                "CloudDep"
+            ],
+            "metadata": {
+                "description": "Input array for resource group names."
+            }
         },
         "StorageAccountnewOrExisting": {
             "type": "string",
@@ -147,36 +147,25 @@
 
     },
     "resources": [
-       {
+        {
             "apiVersion": "2015-01-01",
-            "name": "[concat('GenerateGuid',copyIndex())]",
+            "name": "GenerateGuid",
             "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "guidCopy",
-                "count": "[variables('resourceGroupCount')]"
-            },
-        "properties": {
-            "mode": "incremental",
-            "templateLink": {
-                "uri": "[variables('generateGuidTemplateUrl')]",
-                "contentVersion": "1.0.0.0"
-            },
-            "parameters": {
-                "seed": { "value": "[string(copyIndex())]" }
-            }
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('generateGuidTemplateUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
             }
         },
         {
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
-            "name": "[concat('AssigningResourcePermissions',copyIndex())]",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/GenerateGuid', copyIndex())]"
+                "Microsoft.Resources/deployments/GenerateGuid"
             ],
-            "copy": {
-                "name": "assignPermissions",
-                "count": "[variables('resourceGroupCount')]"
-            },
+            "name": "AssigningResourcePermissions",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -185,24 +174,16 @@
                 },
                 "parameters": {
                     "roleDefinitionId": {
-                        "type": "string",
                         "value": "[variables('roleDefinitionId')]"
                     },
                     "principalId": {
-                        "type": "string",
                         "value": "[parameters('ServicePrincipalId')]"
                     },
-                    "roleAssignmentId": {
-                        "type": "string",
-                        "value": "[reference(concat('GenerateGuid',copyIndex())).outputs.guid.value]"
-                    },                   
-                    "resourceGroupCount": {
-                        "type": "int",
-                        "value": "[variables('resourceGroupCount')]"
-                    },
                     "scope": {
-                        "type": "string",
-                        "value": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/', parameters('ResourceGroup')[copyIndex()],'.id')]"
+                        "value": "[variables('roleScope')]"
+                    },
+                    "roleAssignmentId": {
+                        "value": "[reference('GenerateGuid').outputs.guid.value]"
                     }
                 }
             }

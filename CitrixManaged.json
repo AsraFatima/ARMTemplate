@@ -10,28 +10,18 @@
         },
         "principalId": {
             "type": "string",
-            "defaultValue": "",
             "metadata": {
                 "description": "Specifies the Location for the deployment."
             }
         },
         "scope": {
             "type": "string",
-            "defaultValue": "",
             "metadata": {
                 "description": "Specifies the Location for the deployment."
             }
         },
-        "resourceGroupCount": {
-            "type": "int",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Number of resource groups"
-            }
-        },
         "roleAssignmentId": {
             "type": "string",
-            "defaultValue": "",
             "metadata": {
                 "description": "Specifies the Role AssignmentId of the Role."
             }
