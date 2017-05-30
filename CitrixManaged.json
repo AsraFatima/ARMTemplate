@@ -30,9 +30,7 @@
             }
         }
     },
-    "variables": {
-        "scope": "[concat('/subscriptions/',parameters('scope'))]"
-    },
+    "variables": {},
     "resources": [
         {
             "apiVersion": "2014-07-01-preview",
@@ -41,7 +39,7 @@
             "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
-                "scope": "[variables('scope')]"
+                "scope": "[parameters('scope')]"
             }
         }
     ],

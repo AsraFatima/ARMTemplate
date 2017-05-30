@@ -4,7 +4,7 @@
     "parameters": {
        "SubscriptionId": {
           "type": "string",
-          "defaultValue": "2498e3dd-307d-4f0d-bc19-bdc139ce0c30",
+          "defaultValue": "",
           "metadata": {
             "description": "Subscription ID GUID"
           }
@@ -127,7 +127,7 @@
             "Citrix Managed": {
                 "assignPermissionUrl": "[concat(parameters('_artifactsLocation'), 'CitrixManaged', '.json')]",
                 "roleDefinition": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "scope": "[subscription().subscriptionId]"
+                "scope": "[parameters('SubscriptionId')]"
             },
             "Customer Managed": {
                 "assignPermissionUrl": "[concat(parameters('_artifactsLocation'), 'CustomerManaged', '.json')]",
