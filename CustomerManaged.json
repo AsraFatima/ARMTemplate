@@ -28,20 +28,31 @@
             "metaData": {
                 "description": "RoleAssignment Id for the Service Principal."
             }
+        },
+        "ResourceGroup": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "Resource Groups."
+            }
         }
     },
     "variables": {
-       
+        "roleScope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',parameters('ResourceGroup')[1])]"
     },
     "resources": [
         {
             "apiVersion": "2014-07-01-preview",
             "type": "Microsoft.Authorization/roleAssignments",
-            "name": "[parameters('roleAssignmentId')]",
+            "name": "[parameters('roleAssignmentId'),copyIndex()]",
+            "copy": {
+                "name": "roleCopy",
+                "count": "[length(parameters('ResourceGroup'))]"
+            },
             "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
-                "scope": "[parameters('scope')]"
+                "scope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',parameters('ResourceGroup')[copyIndex()])]"
             }
         }
     ],
