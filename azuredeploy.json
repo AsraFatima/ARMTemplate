@@ -2,6 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "SubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specify the Subscription Id."
+            }
+        },
         "MangementType": {
             "type": "string",
             "defaultValue": "Customer Managed",
@@ -101,7 +108,7 @@
             "type": "array",
             "defaultValue": [
                 "CitrixCustomImage",
-                "CloudDep"
+                "CitrixInfraRG38"
             ],
             "metadata": {
                 "description": "Input array for resource group names."
@@ -134,23 +141,32 @@
         "roleDefinitionId": "[variables('currentPermission').roleDefinition]",
         "roleScope": "[variables('currentPermission').scope]",
         "generateGuidTemplateUrl": "[concat(parameters('_artifactsLocation'), 'NewGuid', '.json')]",
-
+        "resourceGroupCount": "[length(parameters('ResourceGroup'))]",
 
 
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('VirtualNetworknewOrExisting'),'.json')]"
-        
+
     },
     "resources": [
         {
             "apiVersion": "2015-01-01",
-            "name": "GenerateGuid",
+            "name": "[concat('GenerateGuid',copyIndex())]" ,
             "type": "Microsoft.Resources/deployments",
+            "copy": {
+                "name": "guidCopy",
+                "count": "[variables('resourceGroupCount')]"
+            },
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
                     "uri": "[variables('generateGuidTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "seed": {
+                        "value": "[string(copyIndex())]"
+                    }
                 }
             }
         },
@@ -231,7 +247,7 @@
                         "value": "[variables('roleScope')]"
                     },
                     "roleAssignmentId": {
-                        "value": "[reference('GenerateGuid').outputs.guid.value]"
+                        "value": "[reference('GenerateGuid0').outputs.guid.value]"
                     },
                     "ResourceGroup": {
                         "value": "[parameters('ResourceGroup')]"
