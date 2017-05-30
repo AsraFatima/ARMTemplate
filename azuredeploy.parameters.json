@@ -2,21 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SubscriptionId": { "value": "9e5356a6-36bb-4898-9ac4-4e50debea6d4" },
-        "MangementType": { "value": "Customer Managed" },
-        "ResourceGroup": {
-            "value": [
-                "CitrixCustomImage",
-                "CitrixInfraRG37"
-            ]
-        },
+        "MangementType": { "value": "Citrix Managed" },
         "location": { "value": "westus" },
         "StorageAccountnewOrExisting": { "value": "new" },
         "VirtualNetworknewOrExisting": { "value": "new" },
-        "ImageStorageAccountName": { "value": "customimage37" },
+        "ImageStorageAccountName": { "value": "customimage22" },
         "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
-        "VirtualNetworkName": { "value": "MyVNET37" },
-        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG37" },
+        "VirtualNetworkName": { "value": "MyVNET22" },
+        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG22" },
         "ServicePrincipalId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" },
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }

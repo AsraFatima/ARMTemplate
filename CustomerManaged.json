@@ -9,39 +9,41 @@
             }
         },
         "principalId": {
-            "type": "string",            
+            "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "Specifies the Location for the deployment."
             }
         },
         "scope": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "Specifies the Location for the deployment."
             }
         },
         "roleAssignmentId": {
             "type": "string",
-            "metadata": {
-                "description": "Specifies the Role AssignmentId of the Role."
+            "defaultValue": "",
+            "metaData": {
+                "description": "RoleAssignment Id for the Service Principal."
             }
         }
     },
-    "variables": {       
-        "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
-
+    "variables": {
+        
     },
-    "resources": [        
+    "resources": [
         {
             "apiVersion": "2014-07-01-preview",
             "type": "Microsoft.Authorization/roleAssignments",
             "name": "[parameters('roleAssignmentId')]",
-             "properties": {
+            "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
                 "scope": "[parameters('scope')]"
             }
         }
     ],
-    "outputs": {}
+    "outputs": { }
 }
