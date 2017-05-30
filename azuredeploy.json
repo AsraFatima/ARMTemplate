@@ -219,24 +219,25 @@
                 }
             }
             }
-        }, 
+        },
         {
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
+            "name": "[concat('AssigningResourcePermissions',copyIndex())]",
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/GenerateGuid', copyIndex())]"
             ],
-            "name": "[concat('AssigningResourcePermissions',copyIndex())]",
+            "copy": {
+                "name": "AssignPermissions",
+                "count": "[variables('resourceGroupCount')]"
+            },
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[variables('assignPermissionTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "copy": {
-                    "name": "AssignPermissions",
-                    "count": "[variables('resourceGroupCount')]"
-                },
+
                 "parameters": {
                     "roleDefinitionId": {
                         "value": "[variables('roleDefinitionId')]"
