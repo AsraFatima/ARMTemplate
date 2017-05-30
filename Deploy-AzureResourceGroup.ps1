@@ -4,7 +4,7 @@
 
 Param(
     [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation,
-    [string]  [Parameter(Mandatory=$true)] $ResourceGroupName,
+    [string] $ResourceGroupName = 'CitrixInfraRG35',
     [switch] $UploadArtifacts,
     [string] $StorageAccountName,
     [string] $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts',

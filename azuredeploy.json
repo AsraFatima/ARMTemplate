@@ -140,27 +140,13 @@
 
         "roleDefinitionId": "[variables('currentPermission').roleDefinition]",
         "roleScope": "[variables('currentPermission').scope]",
-        "generateGuidTemplateUrl": "[concat(parameters('_artifactsLocation'), 'NewGuid', '.json')]",
-
-
+       
 
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('VirtualNetworknewOrExisting'),'.json')]"
         
     },
     "resources": [
-        {
-            "apiVersion": "2015-01-01",
-            "name": "GenerateGuid",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "incremental",
-                "templateLink": {
-                    "uri": "[variables('generateGuidTemplateUrl')]",
-                    "contentVersion": "1.0.0.0"
-                }
-            }
-        },
         {
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('ImageStoreResourceGroup')]",
@@ -217,9 +203,7 @@
         {
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "Microsoft.Resources/deployments/GenerateGuid"
-            ],
+            "dependsOn": [],
             "name": "AssigningResourcePermissions",
             "properties": {
                 "mode": "Incremental",
@@ -228,6 +212,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "resorceGroupCount": {
+                        "value": "[length(parameters('ResourceGroup'))]"
+                    },
                     "roleDefinitionId": {
                         "value": "[variables('roleDefinitionId')]"
                     },
@@ -236,9 +226,6 @@
                     },
                     "scope": {
                         "value": "[variables('roleScope')]"
-                    },
-                    "roleAssignmentId": {
-                        "value": "[reference('GenerateGuid').outputs.guid.value]"
                     }
                 }
             }
