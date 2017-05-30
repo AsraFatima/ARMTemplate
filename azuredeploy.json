@@ -241,7 +241,7 @@
                         "value": "[parameters('ServicePrincipalId')]"
                     },
                     "roleAssignmentId": {
-                        "value": "[reference('GenerateGuid').outputs.guid[copyIndex()].value]"
+                        "value": "[reference(concat('GenerateGuid',copyIndex())).outputs.guid[copyIndex()].value]"
                     },
                     "resourceGroupCount": {
                         "value": "[variables('resourceGroupCount')]"
