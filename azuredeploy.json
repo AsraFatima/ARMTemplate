@@ -215,7 +215,7 @@
                     "_artifactsLocation": {
                         "value": "[parameters('_artifactsLocation')]"
                     },
-                    "resorceGroupCount": {
+                    "resourceGroupCount": {
                         "value": "[length(parameters('ResourceGroup'))]"
                     },
                     "roleDefinitionId": {

@@ -3,11 +3,11 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "SubscriptionId": { "value": "9e5356a6-36bb-4898-9ac4-4e50debea6d4" },
-        "MangementType": { "value": "Citrix Managed" },
+        "MangementType": { "value": "Customer Managed" },
         "ResourceGroup": {
             "value": [
                 "CitrixCustomImage",
-                "CitrixInfraRG35"
+                "CitrixInfraRG36"
             ]
         },
         "location": { "value": "westus" },
