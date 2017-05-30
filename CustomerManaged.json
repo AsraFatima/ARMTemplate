@@ -59,7 +59,7 @@
         {
             "apiVersion": "2014-07-01-preview",
             "type": "Microsoft.Authorization/roleAssignments",
-            "name": "[reference(concat('GenerateGuiid',copyIndex()).outputs.guid.value)]",
+            "name": "[reference(concat('GenerateGuid', copyIndex())).outputs.guid.value]",
             "copy": {
                 "name": "anyname",
                 "count": "[parameters('resourceGroupCount')]"
@@ -71,5 +71,5 @@
             }
         }
     ],
-    "outputs": { }
+    "outputs": {}
 }
