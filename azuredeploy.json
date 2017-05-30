@@ -97,6 +97,16 @@
             },
             "defaultValue": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
         },
+        "ResourceGroup": {
+            "type": "array",
+            "defaultValue": [
+                "CitrixCustomImage",
+                "CloudDep"
+            ],
+            "metadata": {
+                "description": "Input array for resource group names."
+            }
+        },
         "_artifactsLocationSasToken": {
             "type": "securestring",
             "metadata": {
@@ -222,6 +232,9 @@
                     },
                     "roleAssignmentId": {
                         "value": "[reference('GenerateGuid').outputs.guid.value]"
+                    },
+                    "ResourceGroup": {
+                        "value": "[parameters('ResourceGroup')]"
                     }
                 }
             }
