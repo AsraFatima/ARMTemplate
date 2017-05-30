@@ -137,14 +137,14 @@
         },
         "currentPermission": "[variables('assignPermission')[parameters('MangementType')]]",
         "assignPermissionTemplateUrl": "[variables('currentPermission').assignPermissionUrl]",
-
+        "generateGuidTemplateUrl": "[concat(parameters('_artifactsLocation'), 'NewGuid', '.json')]",
         "roleDefinitionId": "[variables('currentPermission').roleDefinition]",
         "roleScope": "[variables('currentPermission').scope]",
-       
+        "resourceGroupCount": "[length(parameters('ResourceGroup'))]",
 
         "creatingStorageAccountUrl": "[concat(parameters('_artifactsLocation'), 'storageAccount-new', '.json')]",
         "creatingVirtualNetworkUrl": "[concat(parameters('_artifactsLocation'),'VirtualNetwork-',parameters('VirtualNetworknewOrExisting'),'.json')]"
-        
+
     },
     "resources": [
         {
@@ -199,11 +199,33 @@
             }
 
         },
-
+        {
+            "apiVersion": "2015-01-01",
+            "name": "[concat('GenerateGuid',copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "copy": {
+                "name": "guidCopy",
+                "count": "[variables('resourceGroupCount')]"
+            },
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('generateGuidTemplateUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "seed": {
+                        "value": "[string(copyIndex())]"
+                    }
+                }
+            }
+        },
         {
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn": [],
+            "dependsOn": [
+                "Microsoft.Resources/deployments/GenerateGuid"
+            ],
             "name": "AssigningResourcePermissions",
             "properties": {
                 "mode": "Incremental",
@@ -212,14 +234,17 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "resourceGroupCount": {
-                        "value": "[length(parameters('ResourceGroup'))]"
-                    },
-                    "roleDefinitionId": {
+                     "roleDefinitionId": {
                         "value": "[variables('roleDefinitionId')]"
                     },
                     "principalId": {
                         "value": "[parameters('ServicePrincipalId')]"
+                    },
+                    "roleAssignmentId": {
+                        "value": "[reference(concat('GenerateGuid', copyIndex())).outputs.guid.value]"
+                    },
+                    "resourceGroupCount": {
+                        "value": "[variables('resourceGroupCount')]"
                     },
                     "scope": {
                         "value": "[variables('roleScope')]"

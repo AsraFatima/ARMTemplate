@@ -28,38 +28,24 @@
             "metadata": {
                 "description": "Number of resource groups"
             }
+        },
+        "roleAssignmentId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the Role AssignmentId of the Role."
+            }
         }
     },
     "variables": {
-        "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/",
-        "generateGuidTemplateUrl": "[concat(variables('_artifactsLocation'), 'NewGuid', '.json')]"
+        "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
+
     },
     "resources": [
         {
-            "apiVersion": "2015-01-01",
-            "name": "[concat('GenerateGuid',copyIndex())]",
-            "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "guidCopy",
-                "count": "[parameters('resourceGroupCount')]"
-            },
-            "properties": {
-                "mode": "incremental",
-                "templateLink": {
-                    "uri": "[variables('generateGuidTemplateUrl')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "seed": {
-                        "value": "[string(copyIndex())]"
-                    }
-                }
-            }
-        },
-        {
             "apiVersion": "2014-07-01-preview",
             "type": "Microsoft.Authorization/roleAssignments",
-            "name": "[reference(concat('GenerateGuid', copyIndex())).outputs.guid.value]",
+            "name": "[parameters('roleAssignmentId')]",
             "copy": {
                 "name": "anyname",
                 "count": "[parameters('resourceGroupCount')]"
