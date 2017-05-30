@@ -224,17 +224,21 @@
             "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "Microsoft.Resources/deployments/GenerateGuid"
+                "[concat('Microsoft.Resources/deployments/GenerateGuid', copyIndex())]"
             ],
-            "name": "AssigningResourcePermissions",
+            "name": "[concat('AssigningResourcePermissions',copyIndex())]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[variables('assignPermissionTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
                 },
+                "copy": {
+                    "name": "AssignPermissions",
+                    "count": "[variables('resourceGroupCount')]"
+                },
                 "parameters": {
-                     "roleDefinitionId": {
+                    "roleDefinitionId": {
                         "value": "[variables('roleDefinitionId')]"
                     },
                     "principalId": {
