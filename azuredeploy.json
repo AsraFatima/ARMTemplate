@@ -201,12 +201,8 @@
         },
         {
             "apiVersion": "2015-01-01",
-            "name": "[concat('GenerateGuid',copyIndex())]",
+            "name": "GenerateGuid",
             "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "guidCopy",
-                "count": "[variables('resourceGroupCount')]"
-            },
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -241,7 +237,7 @@
                         "value": "[parameters('ServicePrincipalId')]"
                     },
                     "roleAssignmentId": {
-                        "value": "[reference(concat('GenerateGuid', copyIndex())).outputs.guid.value]"
+                        "value": "[reference('GenerateGuid').outputs.guid.value]"
                     },
                     "resourceGroupCount": {
                         "value": "[variables('resourceGroupCount')]"
