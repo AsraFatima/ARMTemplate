@@ -15,7 +15,7 @@
         },
         "StorageaccountNewOrExisting": {
             "type": "string",
-            "defaultValue": "new",
+            "defaultValue": "Create new",
             "allowedValues": [
                 "Create new",
                 "Use existing"
@@ -51,7 +51,7 @@
         },
         "VNETNewOrExisting": {
             "type": "string",
-            "defaultValue": "new",
+            "defaultValue": "Create new",
             "allowedValues": [
                 "Create new",
                 "Use existing"
