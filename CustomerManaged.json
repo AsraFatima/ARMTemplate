@@ -52,7 +52,7 @@
             "properties": {
                 "roleDefinitionId": "[parameters('roleDefinitionId')]",
                 "principalId": "[parameters('principalId')]",
-                "scope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',parameters('ResourceGroup')[1])]"
+                "scope": "[parameters('scope')]"
             }
         }
     ],
