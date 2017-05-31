@@ -20,7 +20,7 @@
                 "description": "Specifies the type of storage account, if being created."
             }
         },
-        "StorageAccountnewOrExisting": {
+        "StorageaccountNewOrExisting": {
             "type": "string",
             "defaultValue": "new",
             "allowedValues": [
@@ -31,7 +31,7 @@
                 "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
             }
         },
-        "ImageStorageAccountName": {
+        "ImageStorageaccountName": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
@@ -65,7 +65,7 @@
                 "description": "Specifies the Location for the deployment."
             }
         },
-        "VirtualNetworknewOrExisting": {
+        "VNETNewOrExisting": {
             "type": "string",
             "defaultValue": "new",
             "allowedValues": [
@@ -83,7 +83,7 @@
                 "description": "Specifies the name of the Virtual Network."
             }
         },
-        "VirtualNetworkResourceGroup": {
+        "VNETResourceGroup": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
@@ -97,14 +97,14 @@
                 "description": "Specify the Application Id of the Service Principal."
             }
         },
-        "ResourceGroup": {
+        "ResourceGroups": {
             "type": "array",
             "defaultValue": [
                 "CitrixCustomImage",
                 "CitrixInfraRG38"
             ],
             "metadata": {
-                "description": "Input array for resource group names."
+                "description": "Names of the Resource Groups to assign Permissions."
             }
         },
         "_artifactsLocation": {
