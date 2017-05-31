@@ -151,15 +151,15 @@
     "resources": [
         {
             "apiVersion": "2015-01-01",
-            "name": "GenerateGuid" ,
+            "name": "GenerateGuid",
             "type": "Microsoft.Resources/deployments",
-            
+
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
                     "uri": "[variables('generateGuidTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
-                }               
+                }
             }
         },
         {
@@ -233,7 +233,7 @@
                         "value": "[variables('roleDefinitionId')]"
                     },
                     "principalId": {
-                        "value": "[parameters('ServicePrincipalId')]"
+                        "value": "[parameters('ApplicationId')]"
                     },
                     "scope": {
                         "value": "[variables('roleScope')]"

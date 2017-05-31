@@ -17,7 +17,7 @@
                 "CitrixInfraRG38"
             ]
         },
-        "ServicePrincipalId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" },
+        "ApplicationId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" },
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }
 }
