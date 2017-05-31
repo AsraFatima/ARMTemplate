@@ -151,23 +151,15 @@
     "resources": [
         {
             "apiVersion": "2015-01-01",
-            "name": "[concat('GenerateGuid',copyIndex())]" ,
+            "name": "GenerateGuid" ,
             "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "guidCopy",
-                "count": "[variables('resourceGroupCount')]"
-            },
+            
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
                     "uri": "[variables('generateGuidTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "seed": {
-                        "value": "[string(copyIndex())]"
-                    }
-                }
+                }               
             }
         },
         {
@@ -247,7 +239,7 @@
                         "value": "[variables('roleScope')]"
                     },
                     "roleAssignmentId": {
-                        "value": "[reference('GenerateGuid0').outputs.guid.value]"
+                        "value": "[reference('GenerateGuid').outputs.guid.value]"
                     },
                     "ResourceGroup": {
                         "value": "[parameters('ResourceGroup')]"
