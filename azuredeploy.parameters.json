@@ -2,9 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SubscriptionId": { "value": "9e5356a6-36bb-4898-9ac4-4e50debea6d4" },
-        "MangementType": { "value": "Customer Managed" },
-        "location": { "value": "westus" },
+          "MangementType": { "value": "Customer Managed" },      
         "StorageAccountnewOrExisting": { "value": "new" },
         "VirtualNetworknewOrExisting": { "value": "new" },
         "ImageStorageAccountName": { "value": "customimage38" },
