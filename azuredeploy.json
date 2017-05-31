@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Specify the Subscription Id."
-            }
-        },
         "MangementType": {
             "type": "string",
             "defaultValue": "Customer Managed",
@@ -112,6 +105,7 @@
             "metadata": {
                 "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
             },
+            "visible":false,
             "defaultValue": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/"
         },
         "_artifactsLocationSasToken": {
