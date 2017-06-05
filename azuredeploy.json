@@ -1,0 +1,225 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "MangementType": {
+            "type": "string",
+            "defaultValue": "Customer Managed",
+            "allowedValues": [
+                "Citrix Managed",
+                "Customer Managed"
+            ],
+            "metadata": {
+                "description": "Specifies the type of storage account, if being created."
+            }
+        },
+        "StorageaccountNewOrExisting": {
+            "type": "string",
+            "defaultValue": "Create new",
+            "allowedValues": [
+                "Create new",
+                "Use existing"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "ImageStoreResourceGroup": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the resource group which should contain the storage account."
+            }
+        },
+        "ImageStorageaccountName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the name of the storage account used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
+            }
+        },
+        "StorageType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",               
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "Specifies the type of storage account, if being created."
+            }
+        },
+        "VNETNewOrExisting": {
+            "type": "string",
+            "defaultValue": "Create new",
+            "allowedValues": [
+                "Create new",
+                "Use existing"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "VNETName": {
+            "type": "string",
+            "defaultValue": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/')]",
+            "metadata": {
+                "description": "Specifies the name of the Virtual Network."
+            }
+        },
+        "VNETResourceGroup": {
+            "type": "string",
+            "defaultValue": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/')]",
+            "metadata": {
+                "description": "Specify the Resource Group  for the Virtual Network."
+            }
+        },
+        "ApplicationId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specify the Application Id of the Service Principal."
+            }
+        },
+        "XenAppWorkerResourceGroups": {
+            "type": "array",
+            "defaultValue": [
+                "CitrixCustomImage",
+                "CitrixInfraRG38"
+            ],
+            "metadata": {
+                "description": "Input array for resource group names."
+            }
+        }
+
+    },
+    "variables": {
+        "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/",
+        "resourceLocation": "[resourceGroup().location]",
+        "assignPermission": {
+            "Citrix Managed": {
+                "assignPermissionUrl": "[concat(variables('_artifactsLocation'), 'CitrixManaged', '.json')]",
+                "roleDefinition": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+                "scope": "[subscription().subscriptionId]"
+            },
+            "Customer Managed": {
+                "assignPermissionUrl": "[concat(variables('_artifactsLocation'), 'CustomerManaged', '.json')]",
+                "roleDefinition": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
+                "scope": "[resourceGroup().id]"
+            }
+        },
+        "currentPermission": "[variables('assignPermission')[parameters('MangementType')]]",
+        "assignPermissionTemplateUrl": "[variables('currentPermission').assignPermissionUrl]",
+
+        "roleDefinitionId": "[variables('currentPermission').roleDefinition]",
+        "roleScope": "[variables('currentPermission').scope]",
+        "generateGuidTemplateUrl": "[concat(variables('_artifactsLocation'), 'NewGuid', '.json')]",
+        "resourceGroupCount": "[length(parameters('XenAppWorkerResourceGroups'))]",
+
+
+        "creatingStorageAccountUrl": "[concat(variables('_artifactsLocation'), 'storageAccount-new', '.json')]",
+        "creatingVirtualNetworkUrl": "[concat(variables('_artifactsLocation'),'VirtualNetwork-',parameters('VNETNewOrExisting'),'.json')]"
+
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-01-01",
+            "name": "GenerateGuid",
+            "type": "Microsoft.Resources/deployments",
+
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('generateGuidTemplateUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('ImageStoreResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [],
+            "name": "CreateStorageAccount",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('creatingStorageAccountUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[variables('resourceLocation')]"
+                    },
+                    "vhdStorageAccount": {
+                        "value": "[parameters('ImageStorageAccountName')]"
+                    },
+                    "vhdStorageType": {
+                        "value": "[parameters('StorageType')]"
+                    },
+                    "vhdStorageGroup": {
+                        "value": "[parameters('ImageStoreResourceGroup')]"
+                    }
+                }
+            }
+
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('VNETNewOrExisting')]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [],
+            "name": "CreatingVirtualNetwork",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('creatingVirtualNetworkUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[variables('resourceLocation')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('VNETName')]"
+                    }
+                }
+            }
+
+        },
+
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/GenerateGuid"
+            ],
+            "name": "AssigningResourcePermissions",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('assignPermissionTemplateUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "roleDefinitionId": {
+                        "value": "[variables('roleDefinitionId')]"
+                    },
+                    "principalId": {
+                        "value": "[parameters('ApplicationId')]"
+                    },
+                    "scope": {
+                        "value": "[variables('roleScope')]"
+                    },
+                    "roleAssignmentId": {
+                        "value": "[reference('GenerateGuid').outputs.guid.value]"
+                    },
+                    "ResourceGroup": {
+                        "value": "[parameters('XenAppWorkerResourceGroups')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
