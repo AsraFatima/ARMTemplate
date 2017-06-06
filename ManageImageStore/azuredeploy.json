@@ -1,0 +1,140 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+    "parameters": {
+        "StorageaccountNewOrExisting": {
+            "type": "string",
+            "defaultValue": "Create new",
+            "allowedValues": [
+                "Create new",
+                "Use existing"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "ImageStoreResourceGroup": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the resource group which should contain the storage account."
+            }
+        },
+        "ImageStorageaccountName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specifies the name of the storage account used for virtual machine disks. This has to be a unique name, up to 24 chars, all lowercase."
+            }
+        },
+        "StorageType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "Specifies the type of storage account, if being created."
+            }
+        },
+        "ApplicationId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Specify the Application Id of the Service Principal."
+            }
+        }
+    },
+    "variables": {
+        "_artifactsLocation": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/ManageImageStore/",
+        "StorageAccount": {
+            "Create New": {
+                "creatingStorageAccountUrl": "[concat(variables('_artifactsLocation'), 'storageAccount-new', '.json')]"
+            },
+            "Use existing": {
+                "creatingStorageAccountUrl": "[concat(variables('_artifactsLocation'), 'storageAccount-existing', '.json')]"
+            }
+        },
+        "currentSA": "[variables('StorageAccount')[parameters('StorageaccountNewOrExisting')]]",
+        "storageAccountTemplate": "[variables('currentSA').creatingStorageAccountUrl]",
+        "assignPermissionUrl": "[concat(variables('_artifactsLocation'), 'AssignPermissions', '.json')]",
+        "generateGuidTemplateUrl": "[concat(variables('_artifactsLocation'), 'NewGuid', '.json')]",
+        "roleDefinition": "[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
+        "scope": "[resourceGroup().id]",
+        "resourceLocation": "[resourceGroup().location]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-01-01",
+            "name": "GenerateGuid",
+            "type": "Microsoft.Resources/deployments",
+
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('generateGuidTemplateUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [],
+            "name": "CreateStorageAccount",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('storageAccountTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[variables('resourceLocation')]"
+                    },
+                    "vhdStorageAccount": {
+                        "value": "[parameters('ImageStorageAccountName')]"
+                    },
+                    "vhdStorageType": {
+                        "value": "[parameters('StorageType')]"
+                    },
+                    "vhdStorageGroup": {
+                        "value": "[parameters('ImageStoreResourceGroup')]"
+                    }
+                }
+            }
+
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/GenerateGuid"
+            ],
+            "name": "AssigningResourcePermissions",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('assignPermissionUrl')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "roleDefinitionId": {
+                        "value": "[variables('roleDefinition')]"
+                    },
+                    "principalId": {
+                        "value": "[parameters('ApplicationId')]"
+                    },
+                    "scope": {
+                        "value": "[variables('scope')]"
+                    },
+                    "roleAssignmentId": {
+                        "value": "[reference('GenerateGuid').outputs.guid.value]"
+                    }
+                }
+            }
+        }
+    ],
+  "outputs": {}
+}
