@@ -6,7 +6,7 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Specifies the resource group which should contain the storage account."
+                "description": "Specify the Worker Resource Group."
             }
         },
         "ApplicationId": {
