@@ -62,14 +62,22 @@
         },
         "VNETName": {
             "type": "string",
+<<<<<<< HEAD
+            "defaultValue": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/')]",
+=======
             "defaultValue": "",
+>>>>>>> origin/master
             "metadata": {
                 "description": "Specifies the name of the Virtual Network."
             }
         },
         "VNETResourceGroup": {
             "type": "string",
+<<<<<<< HEAD
+            "defaultValue": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/')]",
+=======
             "defaultValue": "",
+>>>>>>> origin/master
             "metadata": {
                 "description": "Specify the Resource Group  for the Virtual Network."
             }

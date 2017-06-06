@@ -1,3 +1,25 @@
+<<<<<<< HEAD
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {        
+        "MangementType": { "value": "Customer Managed" },       
+        "StorageAccountnewOrExisting": { "value": "new" },
+        "VirtualNetworknewOrExisting": { "value": "new" },
+        "ImageStorageAccountName": { "value": "customimage38" },
+        "ImageStoreResourceGroup": { "value": "CitrixCustomImage" },
+        "VirtualNetworkName": { "value": "MyVNET38" },
+        "VirtualNetworkResourceGroup": { "value": "CitrixInfraRG38" },
+        "ResourceGroup": {
+            "value": [
+                "CitrixCustomImage",
+                "CitrixInfraRG38"
+            ]
+        },
+        "ApplicationId": { "value": "59fdc4a1-50bc-47aa-9a46-0b8c5a158258" }
+    }
+}
+=======
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
@@ -19,3 +41,4 @@
         "_artifactsLocation": { "value": "https://raw.githubusercontent.com/AsraFatima/ARMTemplate/master/" }
     }
 }
+>>>>>>> origin/master
