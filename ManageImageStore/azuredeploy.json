@@ -93,7 +93,7 @@
                         "value": "[parameters('StorageType')]"
                     },
                     "vhdStorageGroup": {
-                        "value": "[parameters('ImageStoreResourceGroup')]"
+                        "value": "[resourceGroup().name]"
                     }
                 }
             }
