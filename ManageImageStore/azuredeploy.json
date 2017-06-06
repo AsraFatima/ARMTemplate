@@ -13,13 +13,6 @@
                 "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
             }
         },
-        "ImageStoreResourceGroup": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Specifies the resource group which should contain the storage account."
-            }
-        },
         "ImageStorageaccountName": {
             "type": "string",
             "defaultValue": "",
